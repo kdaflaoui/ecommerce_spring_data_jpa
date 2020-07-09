@@ -1,6 +1,5 @@
 package kdevelop;
 
-import kdevelop.dao.Dao;
 import kdevelop.dao.ProductRepository;
 import kdevelop.entities.Product;
 import org.springframework.boot.SpringApplication;
@@ -16,18 +15,18 @@ public class EcommerceJpaHibernateApplication {
     public static void main(String[] args) {
 
         ApplicationContext context = SpringApplication.run(EcommerceJpaHibernateApplication.class, args);
-        Dao<Product> productDao = context.getBean(ProductRepository.class);
-        productDao.save(new Product("Ordinateur", 500.00, 10));
-        productDao.save(new Product("Imprimmante X50", 50.00, 10));
-        productDao.save(new Product("Samsung S10", 600.00, 10));
-        productDao.save(new Product("Dell 5740", 1500.00, 10));
+        ProductRepository productRepository = context.getBean(ProductRepository.class);
+        productRepository.save(new Product("Ordinateur", 500.00, 10));
+        productRepository.save(new Product("Imprimmante X50", 50.00, 10));
+        productRepository.save(new Product("Samsung S10", 600.00, 10));
+        productRepository.save(new Product("Dell 5740", 1500.00, 10));
 
-        List<Product> productList = productDao.getAll();
+        List<Product> productList = productRepository.findAll();
         productList.stream().forEach(product -> {
             System.out.println(product);
         });
         System.out.println("-----------------------------------------------");
-        List<Product> productListByName = productDao.getAllByKeyWord("Dell 5740");
+        List<Product> productListByName = productRepository.getProductByKeyWord("Dell 5740");
         productListByName.stream().forEach(product -> {
             System.out.println(product);
         });
